@@ -1,0 +1,17 @@
+# api服务配置
+api:
+  # 主机地址
+  host: 0.0.0.0
+
+  # 端口号
+  port: 8085
+
+  api_key: Op6Kj+zv@&
+
+# mysql配置
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  dbname: go_blog
+  username: root
+  password: root
