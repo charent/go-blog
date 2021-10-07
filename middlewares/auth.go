@@ -53,9 +53,9 @@ func jwtLoginAuth(c *gin.Context) (interface{}, error)  {
 	if user != nil{
 
 		return &authUser{
-			UserId: user.User_id,
+			UserId: user.UserId,
 			UserName: user.Name,
-			RoleId: user.Role_id,
+			RoleId: user.RoleId,
 		}, nil
 	}
 
