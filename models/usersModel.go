@@ -1,21 +1,12 @@
-package models
+package entity
 
 import (
 	"go-blog/database"
-	"gorm.io/gorm"
+	"go-blog/models/entity"
 )
 
-type User struct {
-	gorm.Model
-	User_id         int
-	Name            string
-	Password        string
-	Salted          string
-	Role_id         int
-	Last_login_time string
-	Last_login_ip   string
-	Deleted         bool
-}
+// User 将Users表改为User定义
+type User entity.Users
 
 // Insert 插入用户
 func (user *User) Insert() (rows int, err error){

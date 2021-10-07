@@ -5,6 +5,11 @@
 
 ## 安装
 ```bash
+# 国内可能需要设置golang的代理
+go env -w GOPROXY=https://goproxy.cn,direct
+
+# 下载项目依赖
+go mod download
 
 ```
 
