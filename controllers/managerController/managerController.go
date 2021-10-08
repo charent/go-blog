@@ -1,4 +1,4 @@
-package adminController
+package managerController
 
 import (
 	"github.com/gin-gonic/gin"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func AdminLogin(c *gin.Context) {
+func ManagerHome(c *gin.Context) {
 	var userService services.LoginUser
 
 	//解析出请求携带的json

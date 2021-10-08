@@ -6,26 +6,31 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// UserModel 注意这里要写=，不能写type User models.User
+// type xx = XX 是类型别名，type xx XX 是类型定义
+type UserModel = models.Users
+
+// LoginUser 登录接口要post的用户名和密码
 type LoginUser struct {
 	Name            string 	`json:"userName" binding:"required"`
 	Password        string 	`json:"password" binding:"required"`
 }
 
-func (user *LoginUser) UserLogin() (authUser *models.User) {
+func (loginUser *LoginUser) UserLogin() (authUser *UserModel) {
 	authUser = nil
-	var userModel models.User
-	userModel.Name = user.Name
+	var userModel UserModel
+	userModel.Name = loginUser.Name
 
 	// 根据用户名查找用户
 	_, err := userModel.FindUserByName()
 
 	if err != nil {
-		log.Error.Printf("adminController login error, message: %v", err)
+		log.Error.Printf("managerController login error, message: %v", err)
 		return
 	}
 
 	//将用户输入的密码和数据库的盐值相加
-	pwdSalted := user.Password + userModel.Salted
+	pwdSalted := loginUser.Password + userModel.Salted
 	//hashedPwd := HashAndSalt(pwdSalted)
 	//print(hashedPwd+"\n")
 
