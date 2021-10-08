@@ -17,9 +17,9 @@ import "gorm.io/gorm"
 // ArticleLabels 文章对应标签表
 type ArticleLabels struct {
 	gorm.Model
-	ArticleId int32 // 文章id
-	Id        int32 // 标签id
-	LabelId   int32 // 标签id
+	ArticleId int // 文章id
+	Id        int // 标签id
+	LabelId   int // 标签id
 
 }
 
@@ -27,15 +27,15 @@ type ArticleLabels struct {
 type Articles struct {
 	gorm.Model
 	Abstract       string // 摘要
-	CategoryId     int32  // 文章分类id
-	Deleted        int32
-	Id             int32  // 文章id
+	CategoryId     int  // 文章分类id
+	Deleted        int
+	Id             int  // 文章id
 	LastUpdateTime string // 上次更新时间
 	MdPath         string // markdown文件路径
-	OwnerId        int32  // 文章拥有者id
+	OwnerId        int  // 文章拥有者id
 	PublishTime    string // 发布时间
 	Tittle         string // 标题
-	Visited        int32  // 访客数量
+	Visited        int  // 访客数量
 
 }
 
@@ -43,7 +43,7 @@ type Articles struct {
 type CategoriesFirst struct {
 	gorm.Model
 	CategoryName string // 分类名字
-	Id           int32  // 分类id
+	Id           int  // 分类id
 
 }
 
@@ -51,15 +51,15 @@ type CategoriesFirst struct {
 type CategoriesSecond struct {
 	gorm.Model
 	CategoryName string // 分类名字
-	FirstId      int32  // 一级分类Id
-	Id           int32  // 分类id
+	FirstId      int  // 一级分类Id
+	Id           int  // 分类id
 
 }
 
 // Labels 标签表
 type Labels struct {
 	gorm.Model
-	Id        int32  // 标签id
+	Id        int  // 标签id
 	LabelName string // 标签名字
 
 }
@@ -67,7 +67,7 @@ type Labels struct {
 // Operations 操作表
 type Operations struct {
 	gorm.Model
-	OpId     int32  // 操作id
+	OpId     int  // 操作id
 	OpName   string // 操作名字
 	OpNameZH string // 操作名字中文
 
@@ -76,9 +76,9 @@ type Operations struct {
 // RoleOperation 角色操作表
 type RoleOperation struct {
 	gorm.Model
-	Id     int32 // id
-	OpId   int32 // 操作id
-	RoleId int32 // 角色id
+	Id     int // id
+	OpId   int // 操作id
+	RoleId int // 角色id
 
 }
 
@@ -86,7 +86,7 @@ type RoleOperation struct {
 type Roles struct {
 	gorm.Model
 	Comments string // 备注
-	RoleId   int32  // 角色id
+	RoleId   int  // 角色id
 	RoleName string // 角色名字
 
 }
@@ -94,12 +94,12 @@ type Roles struct {
 // Users 用户表
 type Users struct {
 	gorm.Model
-	Deleted       int32  // 是否删除
+	Deleted       int  // 是否删除
 	LastLoginIP   string // 上次登录IP
 	LastLoginTime string // 上次登录时间
 	Name          string // 用户名
 	Password      string // 密码
-	RoleId        int32  // 角色id
+	RoleId        int  // 角色id
 	Salted        string // 盐值
-	UserId        int32  // 用户id
+	UserId        int  // 用户id
 }

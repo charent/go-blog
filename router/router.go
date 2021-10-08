@@ -2,7 +2,7 @@ package router
 
 import (
 	"go-blog/config"
-	"go-blog/controllers/adminController"
+	"go-blog/controllers/managerController"
 	"go-blog/middlewares"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +20,7 @@ func InitRouter() {
 	// 需要认证的 api分组
 	authApi := router.Group("/", authMiddleware.MiddlewareFunc())
 	{
-		authApi.POST("/admin/manager", adminController.AdminLogin)
+		authApi.POST("/manager", managerController.ManagerHome)
 	}
 
 	// 公共api
