@@ -12,14 +12,14 @@ type UserModel = models.Users
 
 // LoginUser 登录接口要post的用户名和密码
 type LoginUser struct {
-	Name            string 	`json:"userName" binding:"required"`
+	UserName            string 	`json:"userName" binding:"required"`
 	Password        string 	`json:"password" binding:"required"`
 }
 
 func (loginUser *LoginUser) UserLogin() (authUser *UserModel) {
 	authUser = nil
 	var userModel UserModel
-	userModel.Name = loginUser.Name
+	userModel.UserName = loginUser.UserName
 
 	// 根据用户名查找用户
 	_, err := userModel.FindUserByName()
@@ -35,7 +35,7 @@ func (loginUser *LoginUser) UserLogin() (authUser *UserModel) {
 	//print(hashedPwd+"\n")
 
 	// 将数据库的密文和盐值相加的密码对比
-	if ValidatePasswords(userModel.Password, pwdSalted) {
+	if ValidatePasswords(userModel.PasswordHash, pwdSalted) {
 		authUser = &userModel
 	}
 	return

@@ -21,7 +21,7 @@ func (user *Users) Insert() (rows int, err error){
 
 // FindUserByName 查找用户
 func (user *Users) FindUserByName() (rows int, err error)  {
-	res := database.MysqlDB.Raw("select * from users where name = ? and deleted = false limit 1;", user.Name).Scan(user)
+	res := database.MysqlDB.Raw("select * from users where user_name = ? and deleted = false limit 1;", user.UserName).Scan(user)
 	rows = int(res.RowsAffected)
 	if res.Error != nil{
 		err = res.Error

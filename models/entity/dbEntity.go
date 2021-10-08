@@ -1,10 +1,10 @@
 package entity
 
-import "gorm.io/gorm"
-
 /*
-本段代码由 go-mygen 工具生成，参考：https://github.com/yezihack/go-mygen
-但是该工具生成CURD的代码使用Golang的database/sql来执行，取出的结果要自己拼接为对象，代码可读性差，
+本段代码由工具go-mygen生成
+go get -u -x github.com/yezihack/go-mygen
+go-mygen -h localhost -P 3306 -u root -p root -d go_blog
+但是工具生成CURD的代码使用Golang的database/sql来执行，取出的结果要自己拼接为对象，代码可读性差，
 而且功能缺失（如：文章按发布时间排序、分页等，
 
 也尝试过：https://github.com/xxjwxc/gormt 大佬自动生成CURD代码
@@ -14,92 +14,91 @@ import "gorm.io/gorm"
 
  */
 
-// ArticleLabels 文章对应标签表
+
+// 文章对应标签表
 type ArticleLabels struct {
-	gorm.Model
-	ArticleId int // 文章id
-	Id        int // 标签id
-	LabelId   int // 标签id
+	AlId      int `gorm:"al_id"`      // 标签id 主键
+	ArticleId int `gorm:"article_id"` // 文章id
+	LabelId   int `gorm:"label_id"`   // 标签id
 
 }
 
 // Articles 文章表
 type Articles struct {
-	gorm.Model
-	Abstract       string // 摘要
-	CategoryId     int  // 文章分类id
-	Deleted        int
-	Id             int  // 文章id
-	LastUpdateTime string // 上次更新时间
-	MdPath         string // markdown文件路径
-	OwnerId        int  // 文章拥有者id
-	PublishTime    string // 发布时间
-	Tittle         string // 标题
-	Visited        int  // 访客数量
+	Abstract       string `gorm:"abstract"`    // 摘要
+	ArticleId      int  `gorm:"article_id"`  // 文章id
+	CategoryId     int  `gorm:"category_id"` // 文章分类id
+	Deleted        int  `gorm:"deleted"`
+	LastUpdateTime string `gorm:"last_update_time"` // 上次更新时间
+	MdPath         string `gorm:"mdPath"`           // markdown文件路径
+	OwnerId        int  `gorm:"owner_id"`         // 文章拥有者id
+	PublishTime    string `gorm:"publish_time"`     // 发布时间
+	Tittle         string `gorm:"tittle"`           // 标题
+	Visited        int  `gorm:"visited"`          // 访客数量
 
 }
 
-// CategoriesFirst 文章分类表
+// 文章分类表
 type CategoriesFirst struct {
-	gorm.Model
-	CategoryName string // 分类名字
-	Id           int  // 分类id
+	CategoryName string `gorm:"category_name"` // 分类名字
+	CfId         int  `gorm:"cf_id"`         // 一级分类id
 
 }
 
-// CategoriesSecond 文章分类表
+
+// 文章分类表
 type CategoriesSecond struct {
-	gorm.Model
-	CategoryName string // 分类名字
-	FirstId      int  // 一级分类Id
-	Id           int  // 分类id
+	CategoryName string `gorm:"category_name"` // 分类名字
+	CsId         int  `gorm:"cs_id"`         // 分类id
+	FirstId      int  `gorm:"first_id"`      // 一级分类Id
 
 }
 
-// Labels 标签表
+
+// 标签表
 type Labels struct {
-	gorm.Model
-	Id        int  // 标签id
-	LabelName string // 标签名字
+	LabelId   int  `gorm:"label_id"`   // 标签id
+	LabelName string `gorm:"label_name"` // 标签名字
 
 }
 
-// Operations 操作表
+
+// 操作表
 type Operations struct {
-	gorm.Model
-	OpId     int  // 操作id
-	OpName   string // 操作名字
-	OpNameZH string // 操作名字中文
+	OpId     int  `gorm:"op_id"`     // 操作id
+	OpName   string `gorm:"op_name"`   // 操作名字
+	OpNameZh string `gorm:"opName_zh"` // 操作名字中文
 
 }
 
-// RoleOperation 角色操作表
+
+// 角色操作表
 type RoleOperation struct {
-	gorm.Model
-	Id     int // id
-	OpId   int // 操作id
-	RoleId int // 角色id
+	OpId   int `gorm:"op_id"`   // 操作id
+	RoId   int `gorm:"ro_id"`   // id
+	RoleId int `gorm:"role_id"` // 角色id
 
 }
 
-// Roles 角色表
+
+// 角色表
 type Roles struct {
-	gorm.Model
-	Comments string // 备注
-	RoleId   int  // 角色id
-	RoleName string // 角色名字
+	Comments string `gorm:"comments"`  // 备注
+	RoleId   int  `gorm:"role_id"`   // 角色id
+	RoleName string `gorm:"role_name"` // 角色名字
 
 }
 
-// Users 用户表
+
+// 用户表
 type Users struct {
-	gorm.Model
-	Deleted       int  // 是否删除
-	LastLoginIP   string // 上次登录IP
-	LastLoginTime string // 上次登录时间
-	Name          string // 用户名
-	Password      string // 密码
-	RoleId        int  // 角色id
-	Salted        string // 盐值
-	UserId        int  // 用户id
+	Deleted       int  `gorm:"deleted"`         // 是否删除
+	LastLoginIp   string `gorm:"last_login_ip"`   // 上次登录IP
+	LastLoginTime string `gorm:"last_login_time"` // 上次登录时间
+	PasswordHash  string `gorm:"password_hash"`   // 密码
+	RoleId        int  `gorm:"role_id"`         // 角色id
+	Salted        string `gorm:"salted"`          // 盐值
+	UserId        int  `gorm:"user_id"`         // 用户id
+	UserName      string `gorm:"user_name"`       // 用户名
+
 }

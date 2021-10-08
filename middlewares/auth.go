@@ -12,6 +12,8 @@ import (
 // AuthMiddleware API认证的中间件
 var AuthMiddleware *jwt.GinJWTMiddleware
 
+var identityKey = "userId"
+
 func init()  {
 	var err error
 	AuthMiddleware, err =  jwt.New(&jwt.GinJWTMiddleware{
@@ -22,8 +24,9 @@ func init()  {
 		// token过期时间
 		Timeout: time.Minute * 30,
 		MaxRefresh: time.Minute * 15,
-		Authenticator: jwtLoginAuth,
-		Unauthorized: jwtUnAuth,
+		PayloadFunc: addJwtPayload,  	// 登录成功后生成返回token时会调用该函数，在token的payload字段中添加用户id
+		Authenticator: jwtLoginAuth, 	// 登录时调用该函数，账户密码验证通过后会返回一个jwt token
+		Unauthorized: jwtUnAuth,		// 认证不通过时会调用该函数
 	})
 
 	if err != nil{
@@ -31,10 +34,9 @@ func init()  {
 	}
 }
 
+// 认证通过的User，UserId作为其唯一标记，该标记将放在jwt token中
 type authUser struct {
 	UserId int
-	UserName string
-	RoleId int
 }
 
 // 登录认证
@@ -55,13 +57,21 @@ func jwtLoginAuth(c *gin.Context) (interface{}, error)  {
 	if user != nil{
 		return &authUser{
 			UserId: user.UserId,
-			UserName: user.Name,
-			RoleId: user.RoleId,
 		}, nil
 	}
 
 	// 认证失败
 	return nil, jwt.ErrFailedAuthentication
+}
+
+// 为clams添加用户标记userId，post请求携带的token可识别出是哪个用户
+func addJwtPayload(data interface{}) jwt.MapClaims {
+	if v, ok := data.(*authUser); ok {
+		return jwt.MapClaims{
+			identityKey: v.UserId,
+		}
+	}
+	return jwt.MapClaims{}
 }
 
 // API认证
