@@ -22,3 +22,17 @@ func (article *Articles) FindArticlesOrderByPublishTime(userId int, start int, e
 	}
 	return
 }
+
+// GetLatestArticles 获取最近更新的文章，start和end用于分页
+func (article *Articles) GetLatestArticles(start int, end int) (rows int, err error)  {
+	res := database.MysqlDB.Raw(
+		"select * from articles where deleted = false and private = false order by publish_time desc limit ?,?;",
+		start, end).Scan(article)
+	rows = int(res.RowsAffected)
+	if res.Error != nil {
+		rows = 0
+		err = res.Error
+		return
+	}
+	return
+}

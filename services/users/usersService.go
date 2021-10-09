@@ -1,8 +1,8 @@
-package services
+package users
 
 import (
 	"go-blog/models"
-	"go-blog/utils/log"
+	"go-blog/utils/mylog"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -25,7 +25,7 @@ func (loginUser *LoginUser) UserLogin() (authUser *UserModel) {
 	_, err := userModel.FindUserByName()
 
 	if err != nil {
-		log.Error.Printf("managerController login error, message: %v", err)
+		mylog.Error.Printf("manager login error, message: %v", err)
 		return
 	}
 
@@ -45,7 +45,7 @@ func (loginUser *LoginUser) UserLogin() (authUser *UserModel) {
 func HashAndSalt(password string) string {
 	hash, err := bcrypt.GenerateFromPassword([] byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		log.Error.Printf("hash error, message: %v", err)
+		mylog.Error.Printf("hash error, message: %v", err)
 	}
 	return string(hash)
 }

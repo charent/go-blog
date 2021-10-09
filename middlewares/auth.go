@@ -4,8 +4,8 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"go-blog/config"
-	"go-blog/services"
-	"go-blog/utils/log"
+	"go-blog/services/users"
+	"go-blog/utils/mylog"
 	"time"
 )
 
@@ -30,7 +30,7 @@ func init()  {
 	})
 
 	if err != nil{
-		log.Error.Print("jwt AuthMiddleware init error, message: %v", err)
+		mylog.Error.Print("jwt AuthMiddleware init error, message: %v", err)
 	}
 }
 
@@ -43,7 +43,7 @@ type authUser struct {
 func jwtLoginAuth(c *gin.Context) (interface{}, error)  {
 
 	// 登录接口post上来的用户名和密码 struct
-	var loginUser services.LoginUser
+	var loginUser users.LoginUser
 
 	//解析出请求携带的json
 	err := c.ShouldBindJSON(&loginUser)
