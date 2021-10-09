@@ -80,7 +80,8 @@ create table if not exists articles(
     publish_time varchar(32) not null comment '发布时间',
     last_update_time varchar(32) not null comment '上次更新时间',
     visited int unsigned not null default 0  comment '访客数量',
-    deleted boolean default false
+    private boolean default false comment '是否是私有文章',
+    deleted boolean default false comment '是否删除'
 ) engine InnoDB, default char set utf8mb4, comment '文章表';
 
 

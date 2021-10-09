@@ -6,6 +6,7 @@ api:
   # 端口号
   port: 8085
 
+  # jwt认证时，加密jwt token的密钥
   api_key: Op6Kj+zv@&
 
 # mysql配置

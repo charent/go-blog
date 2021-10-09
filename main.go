@@ -2,10 +2,10 @@ package main
 
 import (
 	"go-blog/router"
-	"go-blog/utils/log"
+	"go-blog/utils/mylog"
 )
 
 func main() {
-	log.Info.Println("server start")
+	mylog.Info.Println("server start")
 	router.InitRouter()
 }

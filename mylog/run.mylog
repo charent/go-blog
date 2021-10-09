@@ -1,0 +1,34 @@
+INFO: 2021/10/09 23:53:13 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/09 23:53:13 main.go:9: server start
+INFO: 2021/10/09 23:53:40 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/09 23:53:40 main.go:9: server start
+INFO: 2021/10/09 23:55:44 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/09 23:55:44 main.go:9: server start
+INFO: 2021/10/09 23:57:58 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/09 23:57:58 main.go:9: server start
+INFO: 2021/10/10 00:03:40 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:03:40 main.go:9: server start
+INFO: 2021/10/10 00:07:29 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:07:29 main.go:9: server start
+INFO: 2021/10/10 00:08:30 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:08:30 main.go:9: server start
+INFO: 2021/10/10 00:10:28 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:10:28 main.go:9: server start
+INFO: 2021/10/10 00:10:58 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:10:58 main.go:9: server start
+INFO: 2021/10/10 00:14:43 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:14:43 main.go:9: server start
+INFO: 2021/10/10 00:15:36 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:15:36 main.go:9: server start
+INFO: 2021/10/10 00:16:15 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:16:15 main.go:9: server start
+INFO: 2021/10/10 00:17:15 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:17:15 main.go:9: server start
+INFO: 2021/10/10 00:17:31 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:17:31 main.go:9: server start
+INFO: 2021/10/10 00:18:37 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:18:37 main.go:9: server start
+INFO: 2021/10/10 00:19:22 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:19:22 main.go:9: server start
+INFO: 2021/10/10 00:20:58 mysql.go:31: open mysql database go_blog success!
+INFO: 2021/10/10 00:20:58 main.go:9: server start

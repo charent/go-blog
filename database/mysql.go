@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 	"go-blog/config"
-	"go-blog/utils/log"
+	"go-blog/utils/mylog"
 	"gorm.io/driver/mysql"
 
 	_ "gorm.io/driver/mysql"
@@ -22,12 +22,12 @@ func init() {
 	var err error
 	MysqlDB, err = gorm.Open(mysql.Open(url), &gorm.Config{})
 	if err != nil {
-		log.Error.Printf("mysql open error, message: %v", err)
+		mylog.Error.Printf("mysql open error, message: %v", err)
 	}
 
 	if MysqlDB.Error != nil {
-		log.Error.Printf("database error %v", MysqlDB.Error)
+		mylog.Error.Printf("database error %v", MysqlDB.Error)
 	} else {
-		log.Info.Printf("open mysql database %s success!", config.Server.Mysql.DBname)
+		mylog.Info.Printf("open mysql database %s success!", config.Server.Mysql.DBname)
 	}
 }
