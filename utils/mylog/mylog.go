@@ -26,7 +26,7 @@ func PathExist(path string) (bool, error) {
 }
 
 func init() {
-	logPath := "mylog"
+	logPath := "log"
 
 	isExist, _ := PathExist(logPath)
 
@@ -37,7 +37,7 @@ func init() {
 		}
 	}
 
-	file, err := os.OpenFile("mylog/run.mylog", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("log/run.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Fail to open logger file, message: ", err)
 	}
