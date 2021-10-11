@@ -29,7 +29,7 @@ func InitRouter() {
 	publicApi := router.Group("/")
 	{
 		publicApi.POST("/user/login", authMiddleware.LoginHandler)
-		publicApi.GET("/home/articles", homeController.GetHomeArticles)
+		publicApi.GET("/home/article/:page", homeController.GetHomeArticles)
 	}
 
 	var ManagerController controller.ManagerController
