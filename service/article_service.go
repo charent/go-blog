@@ -36,6 +36,7 @@ func (a *ArticleService) GetHomeArticles(page int) (nPage int, articles *[]HomeA
 
 	// start大于总文章数，不查了
 	if start > totalArticle {
+		articles = nil
 		return
 	}
 

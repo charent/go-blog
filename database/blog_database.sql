@@ -46,14 +46,14 @@ create table if not exists role_operation(
 create table if not exists category_first(
     cf_id int unsigned primary key auto_increment comment '一级分类id',
     category_name varchar(16) not null comment '分类名字'
-) engine InnoDB, default char set utf8mb4, comment '文章分类表';
+) engine InnoDB, default char set utf8mb4, comment '一级文章分类表';
 
 -- 创建文章二级分类表
 create table if not exists category_second(
     cs_id int unsigned primary key auto_increment comment '分类id',
     first_id int unsigned not null comment '一级分类Id',
     category_name varchar(16) not null comment '分类名字'
-) engine InnoDB, default char set utf8mb4, comment '文章分类表';
+) engine InnoDB, default char set utf8mb4, comment '二级文章分类表';
 
 -- 创建标签表
 create table if not exists label(
@@ -73,14 +73,21 @@ create table if not exists article(
     article_id int unsigned primary key auto_increment comment '文章id',
     owner_id int unsigned not null comment '文章拥有者id',
     category_id int unsigned not null comment '文章分类id',
-    title varchar(64) not null comment '标题',
+    title varchar(128) not null comment '标题',
     abstract text comment '摘要',
-    mdPath varchar(256) comment 'markdown文件路径',
     publish_time varchar(32) not null comment '发布时间',
     last_update_time varchar(32) not null comment '上次更新时间',
     visited int unsigned not null default 0  comment '访客数量',
     private boolean default false comment '是否是私有文章',
     deleted boolean default false comment '是否删除'
 ) engine InnoDB, default char set utf8mb4, comment '文章表';
+
+-- 创建Markdown存储表alter
+-- 不放在article表是因为longtext拆分为单独表可以提高性能（才不是因为我不想写查询用的结构体）
+-- longtext字段的拆分独立，能够很有效的减小主表的物理文件大小
+create table if not exists markdown(
+	 article_id int unsigned primary key comment '文章id，和article表的文章id对应',
+     content longtext not null comment 'markdown文件内容'
+) engine InnoDB, default char set utf8mb4, comment 'markdown存储表';
 
 
