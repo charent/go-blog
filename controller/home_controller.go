@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-blog/service"
 	"net/http"
@@ -11,7 +12,36 @@ type HomeController struct {
 
 }
 
-var ArticleService service.ArticleService
+var articleService service.ArticleService
+
+
+func (h HomeController) GetArticleDetail(c *gin.Context)  {
+	articleId, err := strconv.Atoi(c.Param("articleId"))
+
+	if err != nil || articleId < 0 {
+		PublicHandler.ParamError(c, "文章id错误", articleId)
+		c.Abort()
+		return
+	}
+
+	fmt.Printf("\n%v\n", articleId)
+
+	article, markdown := articleService.GetArticleDetailByArticleId(articleId)
+
+	// 任何一个为nil就是404
+	if article == nil || markdown == nil {
+		PublicHandler.PageNotFound(c)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"article": article,
+		"markdown":markdown.Content,
+	})
+}
+
 
 // GetHomeArticles 获取首页最新更新的文章
 func (h *HomeController)GetHomeArticles(c *gin.Context) {
@@ -19,25 +49,17 @@ func (h *HomeController)GetHomeArticles(c *gin.Context) {
 	page, err := strconv.Atoi(c.Param("page"))
 
 	if err != nil || page < 0 {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
-			"message": "参数错误",
-			"param": page,
-			})
+		PublicHandler.ParamError(c, "页数错误", page)
 		c.Abort()
 		return
 	}
 
-	nPage, latestArticles := ArticleService.GetHomeArticles(page)
+	nPage, latestArticles := articleService.GetHomeArticles(page)
 
 	// 查到的文章为0，但是页数不为0（数据库中有文章），那就是请求的页数错了
 	if latestArticles == nil {
 		if nPage != 0 {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"code": http.StatusBadRequest,
-				"message": "页数错误",
-				"page": page,
-			})
+			PublicHandler.ParamError(c, "页数错误", page)
 			c.Abort()
 			return
 		} else {
