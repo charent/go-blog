@@ -90,6 +90,7 @@ type Label struct {
 type Markdown struct {
 	ArticleId int    `gorm:"article_id"` // 文章id，和article表的文章id对应
 	Content   string `gorm:"content"`    // markdown文件内容
+	Deleted   int    `gorm:"deleted"`    // 是否删除
 
 }
 

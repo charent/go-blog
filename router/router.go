@@ -17,19 +17,24 @@ func InitRouter() {
 	router.Use(gin.Recovery())
 
 	var authMiddleware = middleware.AuthMiddleware
-
+	var publicController = controller.PublicHandler
 	// 404 路由
-	router.NoRoute(func(c *gin.Context) {
-		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})
-	})
+	router.NoRoute(publicController.PageNotFound)
 
 	var homeController controller.HomeController
 
 	// 公共api
 	publicApi := router.Group("/")
 	{
+		// 用户登录
 		publicApi.POST("/user/login", authMiddleware.LoginHandler)
-		publicApi.GET("/home/article/:page", homeController.GetHomeArticles)
+
+		// 获取首页的文章（按时间逆序）,注意：articles复数
+		publicApi.GET("/home/articles/:page", homeController.GetHomeArticles)
+
+		// 获取文章详情，注意：article单数
+		publicApi.GET("/home/article/:articleId", homeController.GetArticleDetail)
+
 	}
 
 	var ManagerController controller.ManagerController

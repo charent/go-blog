@@ -12,18 +12,43 @@ type ArticleModel struct {
 
 }
 
-// FindArticleOrderByPublishTime 按照时间逆序查找文章
-// limit start从0开始，end为闭区间，即是[start,end)
-func (a *ArticleModel) FindArticleOrderByPublishTime(userId int, start int, end int) (articles *[]Article)  {
-	res := DB.Raw(
-		// 按照 publish_time 逆排序
-		"select * from article where where owner_id = ? and deleted = false order by publish_time desc limit ?,?;",
-		userId, start, end).Scan(articles)
+// FindArticleByArticleId 根据文章id获取文章信息
+func (a *ArticleModel) FindArticleByArticleId(articleId int) (article *Article)  {
+	var findArticle Article
+	res := DB.Raw("select * from article where article_id = ? and deleted = false and private = false;", articleId).Scan(&findArticle)
+
+	if res.RowsAffected == 0 {
+		return
+	}
 
 	if res.Error != nil {
 		mylog.Error.Printf("execute sql error, message: %v", res.Error.Error())
 		return
 	}
+	article = &findArticle
+	return
+}
+
+
+
+// FindArticleOrderByPublishTime 按照时间逆序查找文章
+// limit start从0开始，end为闭区间，即是[start,end)
+func (a *ArticleModel) FindArticleOrderByPublishTime(userId int, start int, end int) (articles *[]Article)  {
+	var findArticles []Article
+	res := DB.Raw(
+		// 按照 publish_time 逆排序
+		"select * from article where where owner_id = ? and deleted = false order by publish_time desc limit ?,?;",
+		userId, start, end).Scan(&findArticles)
+
+	if res.RowsAffected == 0 {
+		return
+	}
+
+	if res.Error != nil {
+		mylog.Error.Printf("execute sql error, message: %v", res.Error.Error())
+		return
+	}
+	articles = &findArticles
 	return
 }
 
@@ -46,6 +71,10 @@ func  (a *ArticleModel) GetLatestArticle(start int, end int) (articles *[]Articl
 	res := database.MysqlDB.Raw(
 		"select * from article where deleted = false and private = false order by publish_time desc limit ?,?;",
 		start, end).Scan(&findArticles)
+
+	if res.RowsAffected == 0 {
+		return
+	}
 
 	if res.Error != nil {
 		mylog.Error.Printf("execute sql error, message: %v", res.Error.Error())

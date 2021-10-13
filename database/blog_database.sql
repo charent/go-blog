@@ -87,7 +87,8 @@ create table if not exists article(
 -- longtext字段的拆分独立，能够很有效的减小主表的物理文件大小
 create table if not exists markdown(
 	 article_id int unsigned primary key comment '文章id，和article表的文章id对应',
-     content longtext not null comment 'markdown文件内容'
+     content longtext not null comment 'markdown文件内容',
+     deleted boolean default false comment '是否删除'
 ) engine InnoDB, default char set utf8mb4, comment 'markdown存储表';
 
 
