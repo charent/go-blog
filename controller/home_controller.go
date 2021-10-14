@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-blog/service"
 	"net/http"
@@ -23,8 +22,6 @@ func (h HomeController) GetArticleDetail(c *gin.Context)  {
 		c.Abort()
 		return
 	}
-
-	fmt.Printf("\n%v\n", articleId)
 
 	article, markdown := articleService.GetArticleDetailByArticleId(articleId)
 
