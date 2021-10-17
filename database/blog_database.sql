@@ -45,14 +45,18 @@ create table if not exists role_operation(
 -- 创建文章一级分类表
 create table if not exists category_first(
     cf_id int unsigned primary key auto_increment comment '一级分类id',
-    category_name varchar(16) not null comment '分类名字'
+    owner_id int unsigned not null comment '一级分类拥有者id',
+    category_name varchar(16) not null comment '分类名字',
+	article_count int unsigned not null default 0 comment '当前分类的文章数'
 ) engine InnoDB, default char set utf8mb4, comment '一级文章分类表';
 
 -- 创建文章二级分类表
 create table if not exists category_second(
     cs_id int unsigned primary key auto_increment comment '分类id',
+    owner_id int unsigned not null comment '二级分类拥有者id',
     first_id int unsigned not null comment '一级分类Id',
-    category_name varchar(16) not null comment '分类名字'
+    category_name varchar(16) not null comment '分类名字',
+    article_count int unsigned not null default 0 comment '当前分类的文章数'
 ) engine InnoDB, default char set utf8mb4, comment '二级文章分类表';
 
 -- 创建标签表

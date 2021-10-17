@@ -3,6 +3,8 @@ package model
 import (
 	"go-blog/database"
 	"go-blog/model/entity"
+	"go-blog/utils/mylog"
+	"time"
 )
 
 // User 将User 作为entity.Users的别名
@@ -35,7 +37,20 @@ func (u *UserModel) FindUserByName(userName string) (user *User, err error)  {
 	return
 }
 
-// 删除用户
+func (u *UserModel) UpdateLoginInfo(uerId int, ip string) (RowsAffected int)  {
+
+	res := DB.Exec(
+		"update blog_user set last_login_time = ?, last_login_ip = ? where user_id = ?;",
+		time.Now().Format("2006-01-02 15:04:05"), ip, uerId,
+	)
+	if res.Error != nil {
+		mylog.Error.Printf("execute sql error, message: %v", res.Error.Error())
+		return
+	}
+
+	RowsAffected = int(res.RowsAffected)
+	return
+}
 
 
 

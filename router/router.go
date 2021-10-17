@@ -39,11 +39,18 @@ func InitRouter() {
 
 	var ManagerController controller.ManagerController
 
-	// 需要认证的 api分组 manager/*
+	// 需要认证的api分组, 路径：manager/*
 	authApi := router.Group("/manager")
 	authApi.Use(authMiddleware.MiddlewareFunc())
 	{
 		authApi.POST("/home", ManagerController.Home)
+
+		authApi.GET("/category/first", ManagerController.GetCategoryFirst)
+		authApi.PUT("/category/first", ManagerController.PutCategoryFirst)
+
+		authApi.GET("/category/second", ManagerController.GetCategorySecond)
+		authApi.PUT("/category/second", ManagerController.PutCategorySecond)
+
 	}
 
 	//启动Gin

@@ -15,6 +15,7 @@ func init()  {
 	PublicHandler = &handler
 }
 
+// ParamError 参数错误
 func (p *myHandler) ParamError(c *gin.Context, message string, param interface{})  {
 	c.JSON(http.StatusBadRequest, gin.H{
 		"code": http.StatusBadRequest,
