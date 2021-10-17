@@ -28,7 +28,10 @@ type Article struct {
 	Visited        int    `gorm:"visited"`          // 访客数量
 
 }
-
+func (a *Article) TableName() string {
+	// 映射表名，否则会在表名后面+s => articles
+	return "article"
+}
 
 // ArticleLabel 文章对应标签表
 type ArticleLabel struct {
@@ -37,6 +40,10 @@ type ArticleLabel struct {
 	LabelId   int   `gorm:"label_id"`   // 标签id
 
 }
+func (a *ArticleLabel) TableName() string {
+	return "article_label"
+}
+
 
 
 // BlogRole 角色表
@@ -45,6 +52,9 @@ type BlogRole struct {
 	RoleId   int    `gorm:"role_id"`   // 角色id
 	RoleName string `gorm:"role_name"` // 角色名字
 
+}
+func (b *BlogRole) TableName() string {
+	return "blog_role"
 }
 
 
@@ -61,20 +71,34 @@ type BlogUser struct {
 	UserName      string `gorm:"user_name"`       // 用户名
 
 }
+func (b *BlogUser) TableName() string {
+	return "blog_user"
+}
 
 // CategoryFirst 一级文章分类表
 type CategoryFirst struct {
+	ArticleCount int	`gorm:"article_count"` // 当前分类的文章数
 	CategoryName string `gorm:"category_name"` // 分类名字
 	CfId         int    `gorm:"cf_id"`         // 一级分类id
+	OwnerId      int    `gorm:"owner_id"`      // 一级分类拥有者id
 
 }
+func (c *CategoryFirst) TableName() string {
+	return "category_first"
+}
+
 
 // CategorySecond 二级文章分类表
 type CategorySecond struct {
+	ArticleCount int	`gorm:"article_count"` // 当前分类的文章数
 	CategoryName string `gorm:"category_name"` // 分类名字
 	CsId         int    `gorm:"cs_id"`         // 分类id
 	FirstId      int    `gorm:"first_id"`      // 一级分类Id
+	OwnerId      int    `gorm:"owner_id"`      // 二级级分类拥有者id
 
+}
+func (c *CategorySecond) TableName() string {
+	return "category_second"
 }
 
 
@@ -83,6 +107,9 @@ type Label struct {
 	LabelId   int    `gorm:"label_id"`   // 标签id
 	LabelName string `gorm:"label_name"` // 标签名字
 
+}
+func (l *Label) TableName() string {
+	return "label"
 }
 
 
@@ -93,7 +120,9 @@ type Markdown struct {
 	Deleted   int    `gorm:"deleted"`    // 是否删除
 
 }
-
+func (m *Markdown) TableName() string {
+	return "markdown"
+}
 
 
 // Operation 操作表
@@ -102,6 +131,9 @@ type Operation struct {
 	OpName   string `gorm:"op_name"`   // 操作名字
 	OpNameZh string `gorm:"opName_zh"` // 操作名字中文
 
+}
+func (o *Operation) TableName() string {
+	return "operation"
 }
 
 
@@ -112,3 +144,7 @@ type RoleOperation struct {
 	RoleId int   `gorm:"role_id"` // 角色id
 
 }
+func (r *RoleOperation) TableName() string {
+	return "role_operation"
+}
+

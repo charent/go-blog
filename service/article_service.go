@@ -50,7 +50,10 @@ func (a *ArticleService) GetHomeArticles(page int) (nPage int, articles *[]HomeA
 		return
 	}
 
-	findArticles:= articleModel.GetLatestArticle(start, end)
+	findArticles:= articleModel.FindLatestArticle(start, end)
+	if findArticles == nil {
+		return
+	}
 
 	var returnArticle []HomeArticleJson
 

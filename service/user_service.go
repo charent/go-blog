@@ -13,7 +13,7 @@ type User = entity.BlogUser
 
 // LoginUser 登录接口要post的用户名和密码
 type LoginUser struct {
-	UserName            string 	`json:"userName" binding:"required"`
+	UserName        string 	`json:"userName" binding:"required"`
 	Password        string 	`json:"password" binding:"required"`
 }
 
@@ -22,14 +22,12 @@ type UserService struct {
 }
 var UserModel model.UserModel
 
-func (u *UserService)UserLogin(loginUser *LoginUser) (authUser *User) {
-	authUser = nil
+func (u *UserService)UserLogin(loginUser *LoginUser, ip string) (authUser *User) {
 
 	// 根据用户名查找用户
 	user, err := UserModel.FindUserByName(loginUser.UserName)
 
 	if err != nil {
-		authUser = nil
 		return
 	}
 
@@ -38,9 +36,12 @@ func (u *UserService)UserLogin(loginUser *LoginUser) (authUser *User) {
 	//hashedPwd := HashAndSalt(pwdSalted)
 	//print(hashedPwd+"\n")
 
-	// 将数据库的密文和盐值相加的密码对比
+	// 将数据库的密文和盐值相加的密码对比，对比一致
 	if ValidatePasswords(user.PasswordHash, pwdSalted) {
 		authUser = (*User)(user)
+
+		// 更新登录时间和ip
+		_ = UserModel.UpdateLoginInfo(user.UserId, ip)
 	}
 	return
 }
