@@ -101,6 +101,20 @@ func (c *CategorySecond) TableName() string {
 	return "category_second"
 }
 
+// Draft 用户文章草稿表
+type Draft struct {
+	OwnerId      int32  `gorm:"owner_id"`       // 该草稿的拥有者，和userId对应
+	Title        string `gorm:"title"`          // 标题
+	Abstract     string `gorm:"abstract"`       // 摘要
+	Content      string `gorm:"content"`        // markdown草稿文件内容
+	LastSaveTime string `gorm:"last_save_time"` // 上次保存草稿的时间
+	Deleted      int32  `gorm:"deleted"`        // 是否删除
+
+}
+func (d *Draft) TableName() string {
+	return "draft"
+}
+
 
 // Label 标签表
 type Label struct {
