@@ -71,7 +71,8 @@ func (m *ManagerController) PutCategorySecond(c *gin.Context)  {
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
-		"categoryName": reqJson.CategorySecondName,
+		"categoryFirstName":reqJson.CategoryFirstName,
+		"categorySecondName": reqJson.CategorySecondName,
 	})
 }
 
@@ -90,7 +91,7 @@ func (m *ManagerController) PutCategoryFirst(c *gin.Context)  {
 
 	// rowsAffected为0因为没有插入成功，表示数据库中该用户已经有该分类了，正常插入rowsAffected=1，
 	if rowsAffected ==  0 {
-		PublicHandler.ParamError(c, "一级分类已经存在", reqJson.CategoryName)
+		PublicHandler.ParamError(c, "一级分类 " + reqJson.CategoryName + " 已经存在", reqJson.CategoryName)
 		return
 	}
 

@@ -95,4 +95,13 @@ create table if not exists markdown(
      deleted boolean default false comment '是否删除'
 ) engine InnoDB, default char set utf8mb4, comment 'markdown存储表';
 
-
+-- 创建用户文章草稿表
+-- 每个用户只能有一份草稿
+create table if not exists draft(
+	owner_id int unsigned primary key comment '该草稿的拥有者，和userId对应',
+	title varchar(128) not null comment '标题',
+	abstract text comment '摘要',
+	content longtext not null comment 'markdown草稿文件内容',
+    last_save_time varchar(32) not null comment '上次保存草稿的时间',
+	deleted boolean default false comment '是否删除'
+) engine InnoDB, default char set utf8mb4, comment '用户文章草稿表';
