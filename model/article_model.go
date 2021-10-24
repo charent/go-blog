@@ -23,7 +23,6 @@ func (a *ArticleModel) InsertArticle(article *Article) (articleId int) {
 	}
 
 	if res.RowsAffected == 0 {
-		articleId = -1
 		return
 	}
 	articleId = article.ArticleId

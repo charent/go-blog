@@ -21,7 +21,6 @@ func (m *MarkdownModel) InsertMarkdown(markdown *Markdown) (articleId int)  {
 	}
 
 	if res.RowsAffected == 0 {
-		articleId = -1
 		return
 	}
 	articleId = markdown.ArticleId
