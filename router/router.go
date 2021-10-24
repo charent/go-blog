@@ -45,11 +45,14 @@ func InitRouter() {
 	{
 		authApi.POST("/home", ManagerController.Home)
 
+		// 文章分类
 		authApi.GET("/category/first", ManagerController.GetCategoryFirst)
 		authApi.PUT("/category/first", ManagerController.PutCategoryFirst)
-
 		authApi.GET("/category/second", ManagerController.GetCategorySecond)
 		authApi.PUT("/category/second", ManagerController.PutCategorySecond)
+
+		// 文章发布、管理
+		authApi.PUT("/article", ManagerController.PutArticle)
 
 	}
 

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"go-blog/service"
@@ -109,6 +110,29 @@ func (m *ManagerController) Home(c *gin.Context) {
 
 
 func (m *ManagerController) PutArticle(c *gin.Context)  {
+	userId := extractUserId(c)
+	var reqJson service.PublishArticleJson
+	err := c.ShouldBindJSON(&reqJson)
+	fmt.Printf("%v", err)
+
+	if err != nil {
+		PublicHandler.ParamError(c, err.Error(), nil)
+		return
+	}
+
+	articleId := articleService.InsertArticle(userId, &reqJson)
+
+	if articleId <= 0 {
+		PublicHandler.ParamError(c, "插入失败", nil)
+		return
+	}
+
+	c.JSON(http.StatusOK,gin.H{
+		"code": http.StatusOK,
+		"articleId":articleId,
+		"message": "发布成功",
+	})
+
 
 }
 

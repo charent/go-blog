@@ -17,7 +17,7 @@ go-mygen -h localhost -P 3306 -u root -p root -d go_blog
 // Article 文章表
 type Article struct {
 	Abstract       string `gorm:"abstract"`         // 摘要
-	ArticleId      int    `gorm:"article_id"`       // 文章id
+	ArticleId      int    `gorm:"article_id;primaryKey"`       // 文章id
 	CategoryId     int    `gorm:"category_id"`      // 文章分类id
 	Deleted        int    `gorm:"deleted"`          // 是否删除
 	LastUpdateTime string `gorm:"last_update_time"` // 上次更新时间
@@ -35,7 +35,7 @@ func (a *Article) TableName() string {
 
 // ArticleLabel 文章对应标签表
 type ArticleLabel struct {
-	AlId      int   `gorm:"al_id"`      // 标签id 主键
+	AlId      int   `gorm:"al_id;primaryKey"`      // 标签id 主键
 	ArticleId int   `gorm:"article_id"` // 文章id
 	LabelId   int   `gorm:"label_id"`   // 标签id
 
@@ -49,7 +49,7 @@ func (a *ArticleLabel) TableName() string {
 // BlogRole 角色表
 type BlogRole struct {
 	Comments string `gorm:"comments"`  // 备注
-	RoleId   int    `gorm:"role_id"`   // 角色id
+	RoleId   int    `gorm:"role_id;primaryKey"`   // 角色id
 	RoleName string `gorm:"role_name"` // 角色名字
 
 }
@@ -67,7 +67,7 @@ type BlogUser struct {
 	PasswordHash  string `gorm:"password_hash"`   // 密码
 	RoleId        int    `gorm:"role_id"`         // 角色id
 	Salted        string `gorm:"salted"`          // 盐值
-	UserId        int    `gorm:"user_id"`         // 用户id
+	UserId        int    `gorm:"user_id;primaryKey"`         // 用户id
 	UserName      string `gorm:"user_name"`       // 用户名
 
 }
@@ -79,7 +79,7 @@ func (b *BlogUser) TableName() string {
 type CategoryFirst struct {
 	ArticleCount int	`gorm:"article_count"` // 当前分类的文章数
 	CategoryName string `gorm:"category_name"` // 分类名字
-	CfId         int    `gorm:"cf_id"`         // 一级分类id
+	CfId         int    `gorm:"cf_id;primaryKey"`         // 一级分类id
 	OwnerId      int    `gorm:"owner_id"`      // 一级分类拥有者id
 
 }
@@ -92,7 +92,7 @@ func (c *CategoryFirst) TableName() string {
 type CategorySecond struct {
 	ArticleCount int	`gorm:"article_count"` // 当前分类的文章数
 	CategoryName string `gorm:"category_name"` // 分类名字
-	CsId         int    `gorm:"cs_id"`         // 分类id
+	CsId         int    `gorm:"cs_id;primaryKey"`         // 分类id
 	FirstId      int    `gorm:"first_id"`      // 一级分类Id
 	OwnerId      int    `gorm:"owner_id"`      // 二级级分类拥有者id
 
@@ -103,7 +103,7 @@ func (c *CategorySecond) TableName() string {
 
 // Draft 用户文章草稿表
 type Draft struct {
-	OwnerId      int32  `gorm:"owner_id"`       // 该草稿的拥有者，和userId对应
+	OwnerId      int32  `gorm:"owner_id;primaryKey"`       // 该草稿的拥有者，和userId对应
 	Title        string `gorm:"title"`          // 标题
 	Abstract     string `gorm:"abstract"`       // 摘要
 	Content      string `gorm:"content"`        // markdown草稿文件内容
@@ -118,7 +118,7 @@ func (d *Draft) TableName() string {
 
 // Label 标签表
 type Label struct {
-	LabelId   int    `gorm:"label_id"`   // 标签id
+	LabelId   int    `gorm:"label_id;primaryKey"`   // 标签id
 	LabelName string `gorm:"label_name"` // 标签名字
 
 }
@@ -129,7 +129,7 @@ func (l *Label) TableName() string {
 
 // Markdown markdown存储表
 type Markdown struct {
-	ArticleId int    `gorm:"article_id"` // 文章id，和article表的文章id对应
+	ArticleId int    `gorm:"article_id;primaryKey"` // 文章id，和article表的文章id对应
 	Content   string `gorm:"content"`    // markdown文件内容
 	Deleted   int    `gorm:"deleted"`    // 是否删除
 
@@ -141,7 +141,7 @@ func (m *Markdown) TableName() string {
 
 // Operation 操作表
 type Operation struct {
-	OpId     int    `gorm:"op_id"`     // 操作id
+	OpId     int    `gorm:"op_id;primaryKey"`     // 操作id
 	OpName   string `gorm:"op_name"`   // 操作名字
 	OpNameZh string `gorm:"opName_zh"` // 操作名字中文
 
@@ -153,7 +153,7 @@ func (o *Operation) TableName() string {
 
 // RoleOperation 角色操作表
 type RoleOperation struct {
-	OpId   int   `gorm:"op_id"`   // 操作id
+	OpId   int   `gorm:"op_id;primaryKey"`   // 操作id
 	RoId   int   `gorm:"ro_id"`   // id
 	RoleId int   `gorm:"role_id"` // 角色id
 

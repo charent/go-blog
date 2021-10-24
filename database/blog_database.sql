@@ -76,7 +76,7 @@ create table if not exists article_label(
 create table if not exists article(
     article_id int unsigned primary key auto_increment comment '文章id',
     owner_id int unsigned not null comment '文章拥有者id',
-    category_id int unsigned not null comment '文章分类id',
+    category_id int unsigned not null comment '文章二级分类id',
     title varchar(128) not null comment '标题',
     abstract text comment '摘要',
     publish_time varchar(32) not null comment '发布时间',
