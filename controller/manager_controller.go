@@ -26,6 +26,113 @@ type putCategorySecondJson struct {
 
 }
 
+type renameCategoryJson struct {
+	CategoryId		int 		`json:"categoryId" binding:"required"`
+	NewName			string		`json:"newName" binding:"required"`
+}
+
+// RenameFirstCategory 重命名一级分类
+func (m *ManagerController) RenameFirstCategory(c *gin.Context) {
+	userId := extractUserId(c)
+
+	var reqJson renameCategoryJson
+	err := c.ShouldBindJSON(&reqJson)
+
+	if err != nil {
+		PublicHandler.ParamError(c, err.Error(), nil)
+		return
+	}
+
+	rowsAffected := categoryService.RenameFirstCategoryName(userId, reqJson.CategoryId, reqJson.NewName)
+
+	if rowsAffected != 1 {
+		PublicHandler.ParamError(c, "重命名一级分类失败，请检查参数", reqJson)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"category": reqJson,
+	})
+}
+
+// RenameSecondCategory 重命名二级分类
+func (m *ManagerController) RenameSecondCategory(c *gin.Context) {
+	userId := extractUserId(c)
+
+	var reqJson renameCategoryJson
+	err := c.ShouldBindJSON(&reqJson)
+
+	if err != nil {
+		PublicHandler.ParamError(c, err.Error(), nil)
+		return
+	}
+
+	rowsAffected := categoryService.RenameSecondCategoryName(userId, reqJson.CategoryId, reqJson.NewName)
+
+	if rowsAffected != 1 {
+		PublicHandler.ParamError(c, "重命名二级分类失败，请检查参数", reqJson)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"category": reqJson,
+	})
+}
+
+type deleteJson struct {
+	Id		int		`json:"id" binding:"required"`
+}
+
+// DeleteFirstCategory 删除一级分类
+func (m *ManagerController) DeleteFirstCategory(c *gin.Context) {
+	userId := extractUserId(c)
+
+	var reqJson deleteJson
+	err := c.ShouldBindJSON(&reqJson)
+
+	if err != nil {
+		PublicHandler.ParamError(c, err.Error(), nil)
+		return
+	}
+	rowsAffected := categoryService.DeleteFirstCategory(userId, reqJson.Id)
+
+	if rowsAffected != 1 {
+		PublicHandler.ParamError(c, "删除失败，该分类下的文章数可能不为0，请检查参数", reqJson)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"category": reqJson,
+	})
+
+}
+
+// DeleteSecondCategory 删除二级分类
+func (m *ManagerController) DeleteSecondCategory(c *gin.Context) {
+	userId := extractUserId(c)
+
+	var reqJson deleteJson
+	err := c.ShouldBindJSON(&reqJson)
+
+	if err != nil {
+		PublicHandler.ParamError(c, err.Error(), nil)
+		return
+	}
+	rowsAffected := categoryService.DeleteSecondCategory(userId, reqJson.Id)
+
+	if rowsAffected != 1 {
+		PublicHandler.ParamError(c, "删除失败，该分类下的文章数可能不为0，请检查参数", reqJson)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"category": reqJson,
+	})
+}
+
+
+
+
 // GetCategoryFirst 获取用户的一级分类
 func (m *ManagerController) GetCategoryFirst(c *gin.Context)  {
 	userId := extractUserId(c)

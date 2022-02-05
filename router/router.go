@@ -51,6 +51,14 @@ func InitRouter() {
 		authApi.GET("/category/second", ManagerController.GetCategorySecond)
 		authApi.PUT("/category/second", ManagerController.PutCategorySecond)
 
+		// 一级分类重命名和删除
+		authApi.POST("/category/first/rename", ManagerController.RenameFirstCategory)
+		authApi.DELETE("/category/first", ManagerController.DeleteFirstCategory)
+
+		// 二级分类重命名和删除
+		authApi.POST("/category/second/rename", ManagerController.RenameSecondCategory)
+		authApi.DELETE("/category/second", ManagerController.DeleteSecondCategory)
+
 		// 文章发布、管理
 		authApi.PUT("/article", ManagerController.PutArticle)
 
