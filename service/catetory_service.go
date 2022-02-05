@@ -38,8 +38,6 @@ func (c *CategoryService ) InsertCategoryFirst(userId int, categoryName string) 
 	return
 }
 
-
-
 // GetCategoryFirstJoinSecondByUserId 获取用户的一级分类和二级分类
 func (c *CategoryService) GetCategoryFirstJoinSecondByUserId(userId int)  (category *[]model.CategoryFirstSecond){
 	var tempList = make([]model.CategoryFirstSecond, 0)
@@ -54,8 +52,9 @@ func (c *CategoryService) GetCategoryFirstJoinSecondByUserId(userId int)  (categ
 }
 
 type GetCategoryFirstJson struct {
-	CategoryName string
-	ArticleCount int
+	CfId			int
+	CategoryName 	string
+	ArticleCount	int
 }
 
 // GetFirstCategoryFirstByUserId 获取用户的一级分类
@@ -70,6 +69,7 @@ func (c *CategoryService) GetFirstCategoryFirstByUserId(userId int) (category *[
 	// 过滤掉不需要的字段
 	for _, first := range *findCategory {
 		var tempCate GetCategoryFirstJson
+		tempCate.CfId = first.CfId
 		tempCate.CategoryName = first.CategoryName
 		tempCate.ArticleCount = first.ArticleCount
 		tempList = append(tempList, tempCate)
@@ -78,3 +78,30 @@ func (c *CategoryService) GetFirstCategoryFirstByUserId(userId int) (category *[
 	category = &tempList
 	return
 }
+
+// RenameFirstCategoryName 重命名一级分类
+func (c *CategoryService) RenameFirstCategoryName(userId int, cfId int, newName string) (rowsAffected int)  {
+	rowsAffected = categoryFirstModel.UpdateCategoryName(userId, cfId, newName)
+	return
+}
+
+// RenameSecondCategoryName 重命名二级分类
+func (c *CategoryService) RenameSecondCategoryName(userId int, csId int, newName string) (rowsAffected int)  {
+	rowsAffected = categorySecondModel.UpdateCategoryName(userId, csId, newName)
+	return
+}
+
+// DeleteFirstCategory 删除一级分类
+func (c *CategoryService) DeleteFirstCategory(userId int, cfId int) (rowsAffected int)  {
+	rowsAffected = categoryFirstModel.DeleteCategory(userId, cfId)
+	return
+}
+
+// DeleteSecondCategory 删除二级分类
+func (c *CategoryService) DeleteSecondCategory(userId int, csId int) (rowsAffected int)  {
+	rowsAffected = categoryFirstModel.DeleteCategory(userId, csId)
+	return
+}
+
+
+

@@ -4,6 +4,7 @@ import (
 	"go-blog/model"
 	"go-blog/model/entity"
 	"go-blog/utils"
+	"go-blog/utils/mylog"
 	"math"
 )
 
@@ -47,7 +48,8 @@ func (a *ArticleService) InsertArticle(userId int, reqJson *PublishArticleJson) 
 	}
 
 	// 获取二级分类的id作为文章的分类id
-	categoryId := categorySecondModel.FindIdByNameAndOwnerId(userId, reqJson.CategoryFirstName,reqJson.CategorySecondName)
+	categoryFirstId, categorySecondId := categorySecondModel.FindIdByNameAndOwnerId(
+		userId, reqJson.CategoryFirstName,reqJson.CategorySecondName)
 
 	var updateTime = utils.GetFormatTime()
 
@@ -62,7 +64,7 @@ func (a *ArticleService) InsertArticle(userId int, reqJson *PublishArticleJson) 
 	}
 	article.Abstract = reqJson.MarkdownText[0: abstractEnd] + "......"
 
-	article.CategoryId = categoryId
+	article.CategoryId = categorySecondId
 	article.Private = private
 	article.PublishTime = updateTime
 	article.LastUpdateTime = updateTime
@@ -83,6 +85,14 @@ func (a *ArticleService) InsertArticle(userId int, reqJson *PublishArticleJson) 
 	newArticleId := markdownModel.InsertMarkdown(&markdown)
 	if newArticleId <= 0 {
 		return
+	}
+
+	// 更新分类的文章数
+	row1 := categoryFirstModel.AddArticleCount(userId, categoryFirstId)
+	row2 := categorySecondModel.AddArticleCount(userId, categoryFirstId, reqJson.CategorySecondName)
+
+	if row1 + row2 != 2 {
+		mylog.Error.Printf("update article_count error,message: " + reqJson.CategoryFirstName + "," + reqJson.CategorySecondName)
 	}
 
 	return
